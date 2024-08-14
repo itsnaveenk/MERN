@@ -1,0 +1,61 @@
+const express = require("express");
+const { createTodo, updateTodo } = require("./types");
+const { todo } = require("./db")
+
+const app = express();
+
+app.use(express.json());
+
+
+app.post("/todo", async (req, res) => {
+    const createPayload = req.body;
+    const parsedPayload = createTodo.safeParse(createPayload);
+    if (!parsedPayload.success) {
+        return res.status(400).send(parsedPayload.error);
+    }
+    // put it in mongodb
+    await todo.create({
+        title: parsedPayload.data.title,
+        description: parsedPayload.data.description,
+        completed: false
+    });
+
+    res.json({
+        msg: "Todo created"
+    })
+
+});
+
+app.get("/todos", async (req, res) => {
+    // returns all todos
+    const response = await todo.find({});
+    if (!response) {
+        res.status(400).json({
+            status: "data not found"
+        });
+    }
+    console.log("recieved from db");
+    res.json(response);
+});
+
+app.post("/completed", async (req, res) => {
+    const createPayload = req.body;
+    const parsedPayload = updateTodo.safeParse(createPayload);
+    if (!parsedPayload.success) {
+        return res.status(400).send(parsedPayload.error);
+    }
+    const update = await todo.updateOne({
+        _id: req.body.id
+    }, {
+        completed: true
+    })
+
+    res.json({
+        status: "marked as completed",
+        body: update
+    })
+});
+
+app.listen(3000, () => {
+    console.log("Server is running on port 3000")
+})
