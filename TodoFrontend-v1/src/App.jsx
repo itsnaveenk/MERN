@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+// /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react'
 import CreateTodo from './components/CreateTodo'
 import TodoList from './components/TodoList'
@@ -7,12 +7,15 @@ function App() {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/todos")
+    setInterval(() => {
+      fetch("http://localhost:3000/todos")
       .then(async (res) => {
         const json = await res.json();
         setTodos(json)
-        console.log(json);
+        // console.log(json);
       })
+    }, 5000);
+
   }, [])
 
   return (
