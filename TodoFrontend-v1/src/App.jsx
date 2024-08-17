@@ -1,26 +1,39 @@
-import { useState } from 'react'
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from 'react'
 import CreateTodo from './components/CreateTodo'
 import TodoList from './components/TodoList'
 
 function App() {
-  const [todos, setTodos] = useState([{
-    title:"hello1",
-    description: "hello1",
-    completed:false
-  },
-  {
-    title:"hello2",
-    description: "hello3",
-    completed:true
-  }
-]);
-  
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/todos")
+      .then(async (res) => {
+        const json = await res.json();
+        setTodos(json)
+        console.log(json);
+      })
+  }, [])
+
   return (
     <div>
-      <CreateTodo></CreateTodo>
-      <TodoList todos={todos}></TodoList>
+      <CardWrapper>
+        <CreateTodo></CreateTodo>
+      </CardWrapper>
+      <CardWrapper><TodoList todos={todos}></TodoList></CardWrapper>
     </div>
   )
+}
+
+function CardWrapper({ children }) {
+
+  //create a div which has a border "2px solid black"
+  // inside the div, renders the props
+  return (
+    <div style={{ border: "2px solid black", padding: 20, margin: 20 }}>
+      {children}
+    </div>
+  );
 }
 
 export default App

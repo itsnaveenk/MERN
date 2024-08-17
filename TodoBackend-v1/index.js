@@ -54,7 +54,8 @@ app.post("/completed", async (req, res) => {
     })
 
     res.json({
-        status: "marked as completed",
+        status: update.modifiedCount,
+        message: update.modifiedCount == 0 ? "already marked as completed" : "successfully updated to completed",
         body: update
     })
 });
