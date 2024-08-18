@@ -43,14 +43,16 @@ function CreateTodo() {
                             headers: {
                                 "Content-Type": "application/json",
                             },
-                        }).then(async function (res) {
-                            const resjson = await res.json();
-                            console.log(resjson);
+                        })
+                            .then(async function (res) {
+                                const resjson = await res.json();
+                                console.log(resjson);
 
-                            alert("Todo Created...");
-                        }).catch((e) => {
-                            console.log(e);
-                        });
+                                alert("Todo Created...");
+                            })
+                            .catch((e) => {
+                                console.log(e);
+                            });
                     }}
                 >
                     Add Todo

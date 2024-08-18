@@ -14,8 +14,7 @@ function App() {
         setTodos(json)
         // console.log(json);
       })
-    }, 5000);
-
+    }, 10000);
   }, [])
 
   return (
@@ -23,7 +22,7 @@ function App() {
       <CardWrapper>
         <CreateTodo></CreateTodo>
       </CardWrapper>
-      <CardWrapper><TodoList todos={todos}></TodoList></CardWrapper>
+      <TodoList todos={todos}></TodoList>
     </div>
   )
 }

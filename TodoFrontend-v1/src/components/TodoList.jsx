@@ -44,8 +44,8 @@ function Todo({ todos }) {
         <>
             <h1>All Todos</h1>
             {todos.map((todo) => {
-                return <div key={todo._id}>
-                    <CardWrapper>
+                return <CardWrapper key={todo._id}>
+                    
                         <h2>{todo.title}</h2>
                         <h2>{todo.description}</h2>
                         <button onClick={async (e) => {
@@ -53,8 +53,8 @@ function Todo({ todos }) {
                             // console.log("done/undone this todo: " + todo._id)
                             console.log(await toggleTodoStatus(todo._id) == true ? "successful updation" : "error updation")
                         }}>{todo.completed == true ? "completed" : "not done"}</button>
-                    </CardWrapper>
-                </div>
+                    
+                </CardWrapper>
             })}
         </>
     );
