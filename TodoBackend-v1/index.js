@@ -10,6 +10,18 @@ app.use(cors({
     origin: "http://localhost:5173"
 }))
 
+app.get("/todos", async (req, res) => {
+    // returns all todos
+    const response = await todo.find({});
+    if (!response) {
+        res.status(400).json({
+            status: "data not found"
+        });
+    }
+    console.log("recieved from db");
+    res.json(response);
+});
+
 app.post("/todo", async (req, res) => {
     const createPayload = req.body;
     const parsedPayload = createTodo.safeParse(createPayload);
@@ -23,23 +35,12 @@ app.post("/todo", async (req, res) => {
         completed: false
     });
     console.log("todo created");
-    res.json({
+    res.status(201).json({
         msg: "Todo created"
     })
 
 });
 
-app.get("/todos", async (req, res) => {
-    // returns all todos
-    const response = await todo.find({});
-    if (!response) {
-        res.status(400).json({
-            status: "data not found"
-        });
-    }
-    console.log("recieved from db");
-    res.json(response);
-});
 
 app.post("/completed", async (req, res) => {
     const createPayload = req.body;
