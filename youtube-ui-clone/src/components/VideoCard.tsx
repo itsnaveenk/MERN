@@ -1,6 +1,6 @@
 export function VideoCard(props: any) {
     return (
-        <div className="">
+        <div className="p-3 hover:cursor-pointer">
             <img src={props.image} />
             <div className="grid grid-cols-12 pt-2">
                 <div className="col-span-2 ">
